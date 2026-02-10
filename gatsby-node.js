@@ -10,7 +10,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
-        'deepmerge$': require.resolve('deepmerge/dist/cjs.js'),
+        deepmerge$: require.resolve('deepmerge/dist/cjs.js'),
       },
     },
   });
