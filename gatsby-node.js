@@ -1,11 +1,3 @@
-/**
- * Force Gatsby's SSR bundle to resolve deepmerge to the CommonJS entry.
- *
- * In some workspace/hoisting setups, webpack can pick the ESM build of
- * deepmerge and `require("deepmerge")` then becomes a namespace object
- * instead of a callable function, causing:
- *   TypeError: merge is not a function
- */
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
@@ -13,5 +5,22 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         deepmerge$: require.resolve('deepmerge/dist/cjs.js'),
       },
     },
+  });
+};
+
+exports.onCreateBabelConfig = ({ actions }) => {
+  const opts = { loose: true };
+
+  actions.setBabelPlugin({
+    name: require.resolve('@babel/plugin-transform-class-properties'),
+    options: opts,
+  });
+  actions.setBabelPlugin({
+    name: require.resolve('@babel/plugin-transform-private-methods'),
+    options: opts,
+  });
+  actions.setBabelPlugin({
+    name: require.resolve('@babel/plugin-transform-private-property-in-object'),
+    options: opts,
   });
 };
